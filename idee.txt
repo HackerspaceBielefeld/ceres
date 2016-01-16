@@ -1,0 +1,18 @@
+Alternative:
+pi hat eine liste mit daten
+- Hardware-addrese
+- Notfall-email
+- soft water (etwas zu trocken)
+- hard water (viel zu trocken)
+- no water (zu nass)
+
+und fragt regalmäßig die eingebuchten adressen ab und sendet dabei gleich die eckdaten:
+- ab wann wasser nachlaufen muss 
+- wann der boden zu nass ist
+
+andere ardus ignorieren daten solang sie nicht adressiert wurden.
+
+email geht an die kunden bei:
+- hard-water (Bewässerung ohne Effekt)
+- no water (Boden zu nass)
+
