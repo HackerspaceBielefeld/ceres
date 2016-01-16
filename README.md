@@ -14,5 +14,4 @@ wenn pi mehr als 5 minuten nichts mehr gehört hat muss eine email raus, dass da
 Überlegungen:
 - wie geb ich den befehl zum wässern?
 - soll ich doch lieber die einzelnen ardus einzelnd abfragen und das dann nur über einen bus machen?
-- wie it es mit niedrig wasser alarm
-
+- wie it es mit niedrig wasser alarm ("schwimmer" am wassertank)
