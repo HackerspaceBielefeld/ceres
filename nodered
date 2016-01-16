@@ -1,0 +1,5 @@
+node-red
+	einen neuen node, der daten pakete senden und empfangen kann
+	einen neuen node, der empfangene daten anhand der adresse zuordnet
+	
+flow das einmal pro minute daten abfragt und ... (TODO)
