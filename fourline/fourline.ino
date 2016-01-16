@@ -1,5 +1,5 @@
-// 1111111111 0101010101 0101010101 0101010101 0101010101 0101010101 0101010101 0000000000
-// <start   > <temper  > <temper2 > <wet     > <wet2    > <light   > <light2  > <stop    >
+// 1 01010101 01010101 01010101 01010101 01010101 01010101 111
+//   <temper> <temp2 > <wet   > <wet2  > <light > <light2>
 
 // zeit zwischen 2 daten paketen default:60sekunden
 const unsigned long WAIT    = 60000;
@@ -19,8 +19,9 @@ const int ADDR_0    =  ;
 const int ADDR_1    =  ;
 const int ADDR_2    =  ;
 const int ADDR_3    =  ;
+const int ADDRC     = 4;
 
-const int STAT_SEND =  ;
+const int STAT_ACT  =  ;
 const int STAT_ERR  =  ;
 
 bool send(addr,temp,wet,light) {
@@ -85,6 +86,18 @@ bool biteln(zahl) {
   return ret;
 }
 
+long dezeln(arr) {
+	int c = sizeof(arr);
+	int m = 1;
+	long r =0;
+	for(int i = 0;i<c;i++) {m = m*2;}
+	for(int i = 0;i<c;i++) {
+		r = r + (arr[i]*m);
+		m = m/2;
+	}
+	return r;
+}
+
 int mitteln(aPin,werte=10) {
   long r = 0;
   for(long i = 0;i<werte;i++) {
@@ -93,6 +106,8 @@ int mitteln(aPin,werte=10) {
   int x = r/werte;
   return x;
 }
+
+bool last = LOW;
 
 int addr = 0;
 int temperatur = 0;
@@ -105,6 +120,8 @@ void setup() {
   Serial.println("INIT...");
   pinMode(DATAP, OUTPUT);
   pinMode(OUT_WET, OUTPUT);
+  digitalWrite(DATAP,LOW);
+  digitalWrite(OUT_WET,LOW);
   Serial.println("Output Initialisiert ...");
   
   
@@ -121,8 +138,26 @@ void setup() {
 }
 
 void loop() {
-  // warte WAIT ms ab um neuen test zu machen
-  // prüfe werte
-  // reagiere auf werte
-  // es sei denn du empfängst start byte plus eigene adresse
+  //warte auf anfrage
+  while(digitalRead(DATAP) == LOW) {
+	;
+  }
+  last = digitalRead(CLOCKP);
+  // hole adresse
+  bool ad[ADDRC];
+  for int i = 0; i<ADDRC;i++) {
+	while(digitalRead(CLOCKP) == last) {
+	  ;
+	}
+	last = digitalRead(CLOCKP);
+	ad[i] = digitalRead(DATAP);
+  }
+  
+  if(dezeln(ad) == addr) {
+	// daten empfangen und senden TODO
+  }else{
+	// daten prüfen und autark arbeiten TODO
+  }
+  
+  
 }
