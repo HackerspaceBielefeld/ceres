@@ -24,6 +24,7 @@ const int ADDRC     = 4;
 const int STAT_ACT  =  ;
 const int STAT_ERR  =  ;
 
+//obsolete
 bool send(addr,temp,wet,light) {
   int bitcount = 80;
   bool data[bitcount]
@@ -138,26 +139,90 @@ void setup() {
 }
 
 void loop() {
-  //warte auf anfrage
-  while(digitalRead(DATAP) == LOW) {
-	;
-  }
-  last = digitalRead(CLOCKP);
-  // hole adresse
-  bool ad[ADDRC];
-  for int i = 0; i<ADDRC;i++) {
-	while(digitalRead(CLOCKP) == last) {
-	  ;
+	//warte auf anfrage
+	int timer = 0;
+	bool autark = false;
+	while(digitalRead(DATAP) == LOW) {
+		timer++;
+		delay(1);
+		if(timer > WAIT) {
+			// wenn kein takt autark mode
+			autark = true;
+			break;
+		}
 	}
-	last = digitalRead(CLOCKP);
-	ad[i] = digitalRead(DATAP);
-  }
+	if(!autark){
+		last = digitalRead(CLOCKP);
+		// hole adresse
+		bool ad[ADDRC];
+		for int i = 0; i<ADDRC;i++) {
+			while(digitalRead(CLOCKP) == last) {
+				;
+			}
+			last = digitalRead(CLOCKP);
+			ad[i] = digitalRead(DATAP);
+		}
+	}
   
-  if(dezeln(ad) == addr) {
-	// daten empfangen und senden TODO
-  }else{
-	// daten prüfen und autark arbeiten TODO
-  }
+	if(!autark && dezeln(ad) == addr) {
+		// daten empfangen
+		int n = 48;
+		bool raw[n];
+		int data[3];
+		for(int i = 0;i<n;i++) {
+			while(digitalRead(CLOCKP) == last) {
+				;
+			}
+			last = digitalRead(CLOCKP);
+			raw[i] = digitalRead(DATAP);
+		}
+		
+		// daten vereinzeln und paitieren
+		for(int j = 0;j<3;j++) {
+			k = j*16;
+			bool tmp[8];
+			for(int i = 0; i < 8; i++) {
+				if(raw[(k+i)] == raw[(k+i+8)]) {
+					// daten korrekt
+					tmp[i] = raw[(k+i)];
+				}else{
+					// daten inkorrekt byte nullen
+					for(int l = 0; l<8;l++) {
+						tmp[l] = LOW;
+					}
+					break;
+				}
+			}
+		}
+		
+		// neue daten speichern 
+		//TODO
+		
+		// prüfen ob handlungsbedarf existiert
+		//TODO
+		
+		// bereite sensor daten vor
+		//TODO
+		
+		// start
+		//TODO
+		
+		// 2x temp
+		//TODO
+		
+		// 2x licht
+		//TODO
+		
+		// 2x wasser
+		//TODO
+		
+		// stop	
+		//TODO	
+	
+	}else{
+		// daten prüfen und autark arbeiten TODO
+		
+	}
   
   
 }
