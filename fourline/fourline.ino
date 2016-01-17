@@ -196,6 +196,7 @@ void loop() {
 		}
 		
 		// neue daten speichern 
+		// printlkn nicht vergessen zu ebug zwecken
 		//TODO
 		
 		// prüfen ob handlungsbedarf existiert
